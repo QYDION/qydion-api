@@ -1,0 +1,106 @@
+/*
+ * QYDION API 品牌层（M3，M6 补丁：浅色模式并入夜色）
+ * 色板与 design/tokens.css 同源（--q- 前缀），映射到 shadcn/Tailwind 主题变量。
+ *
+ * 重要：官网设计系统只有夜色一套（base.css: color-scheme: dark），不存在浅色模式。
+ * 因此本层把 :root（浅色钩子）与 .dark 统一映射为 QYDION 夜色——
+ * 无论用户系统偏好/主题开关处于什么状态，控制台始终呈现官网同款夜色。
+ * 导入顺序在 theme.css / theme-presets.css 之后；用户自选预设（data-theme-preset）仍可覆盖。
+ * 对比度按官网 tokens 已实算（§6.1），不得自创组合。
+ */
+html[lang] {
+  /* Surfaces */
+  --q-night-0: #070a10;
+  --q-night-1: #0d121a;
+  --q-night-2: #141b26;
+  --q-night-3: #1b2431;
+  /* Lines */
+  --q-line-1: #263142; /* 仅装饰分隔线 */
+  --q-line-2: #6b7a8f; /* 控件边界（≥3:1） */
+  /* Text */
+  --q-text-1: #edf0f5;
+  --q-text-2: #b4bcc8;
+  --q-text-3: #8e99a8;
+  /* Accent: the origin light（起点光） */
+  --q-accent: #f2c98c;
+  --q-accent-hover: #f7d9ac;
+  --q-on-accent: #070a10;
+  /* Semantic */
+  --q-danger: #ff9e91;
+  --q-success: #8fd4b2;
+
+  /* 控制台整体文档底色/字体对齐官网（§6.2）：
+     Latin 走官网同源 Archivo Variable（wdth 轴），CJK 走 tokens.css 的 --q-font 回退链 */
+  color-scheme: dark;
+  --font-ui-sans: "Archivo Variable", "HarmonyOS Sans SC", "MiSans",
+    "Microsoft YaHei", ui-sans-serif, system-ui, "Segoe UI", Arial, sans-serif;
+  /* §6.2：重要度越高字越宽——标题 wdth 110 */
+  --q-heading-font-variation: "wdth" 110;
+  /* 圆角三档（§6.2）：控件 6px / 浮层 10px；shadcn --radius 以浮层档为基准 */
+  --radius: 0.625rem;
+}
+
+/*
+ * 浅色与深色统一为 QYDION 夜色（两种主题类渲染同一套品牌色板，
+ * 主题开关不再产生白色视图；语义与官网"只有夜色"一致）。
+ */
+:root,
+.dark {
+  --background: var(--q-night-0);
+  --foreground: var(--q-text-1);
+  --card: var(--q-night-1);
+  --card-foreground: var(--q-text-1);
+  --popover: var(--q-night-2);
+  --popover-foreground: var(--q-text-1);
+  --primary: var(--q-accent);
+  --primary-foreground: var(--q-on-accent);
+  --secondary: var(--q-night-3);
+  --secondary-foreground: var(--q-text-2);
+  --muted: var(--q-night-3);
+  --muted-foreground: var(--q-text-3);
+  --accent: var(--q-night-3);
+  --accent-foreground: var(--q-text-1);
+  --destructive: var(--q-danger);
+  --destructive-foreground: var(--q-night-0);
+  --success: var(--q-success);
+  --success-foreground: var(--q-night-0);
+  --border: var(--q-line-1);
+  --input: var(--q-line-1);
+  --ring: var(--q-accent);
+  --chart-1: var(--q-accent);
+  --chart-2: var(--q-line-2);
+  --chart-3: var(--q-text-3);
+  --chart-4: var(--q-success);
+  --chart-5: var(--q-danger);
+  --overview-accent-1: var(--q-accent);
+  --overview-accent-2: var(--q-line-2);
+  --overview-accent-3: var(--q-text-3);
+  --sidebar: var(--q-night-1);
+  --sidebar-foreground: var(--q-text-1);
+  --sidebar-primary: var(--q-accent);
+  --sidebar-primary-foreground: var(--q-on-accent);
+  --sidebar-accent: var(--q-night-3);
+  --sidebar-accent-foreground: var(--q-text-1);
+  --sidebar-border: var(--q-line-1);
+  --sidebar-ring: var(--q-accent);
+  --skeleton-base: var(--q-night-3);
+  --skeleton-highlight: var(--q-night-2);
+  /* 表格行/表头/禁用态（浅色模式下原生是白色系，这里一并并入夜色） */
+  --table-row: var(--q-night-0);
+  --table-header: var(--q-night-1);
+  --table-header-hover: var(--q-night-2);
+  --table-disabled: var(--q-night-2);
+  --table-disabled-hover: var(--q-night-3);
+  --table-disabled-border: var(--q-line-1);
+}
+
+/* 首帧防白闪：theme-color 与文档底色一致 */
+:root {
+  --q-theme-color: #070a10;
+}
+
+/* §6.2：控制台标题字宽（Archivo wdth 轴；正文 100 不变） */
+html[lang] h1,
+html[lang] h2 {
+  font-variation-settings: var(--q-heading-font-variation, "wdth" 110);
+}
