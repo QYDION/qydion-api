@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google" content="notranslate" />
+
+    <!-- Primary Meta Tags -->
+    <title>QYDION API</title>
+    <meta name="title" content="QYDION API" />
+    <meta
+      name="description"
+      content="QYDION API · One singularity, infinite intelligence."
+    />
+
+    <meta name="theme-color" content="#070A10" />
+    <!-- Resolve the theme before first paint so the page never flashes light
+         and one-shot detectors (e.g. Dark Reader) see the real theme.
+         Keep in sync with ThemeProvider and THEME_STORAGE_KEYS.mode.
+         QYDION：官网设计系统只有夜色，默认主题固定 dark（qydion.css 将浅色钩子也并入夜色）。 -->
+    <script>
+      ;(function () {
+        var theme = 'dark'
+        try {
+          theme = localStorage.getItem('newapi:theme:v1:mode') || 'dark'
+        } catch (e) {}
+        if (theme !== 'dark' && theme !== 'light') {
+          theme = 'dark'
+        }
+        document.documentElement.classList.add(theme)
+        // QYDION：标签页图标 = 官方无底小号图形，按**浏览器主题**（matchMedia，
+        // 与标签栏同层）选白/Ink，机制与官网 FAVICON_BOOT_SCRIPT 一致。
+        // 不用 SVG 内媒体查询——它跟随系统主题，"系统浅色 + 浏览器深色"时
+        // 会渲染黑标、融进深色标签栏不可见。
+        try {
+          var fav = document.createElement('link')
+          fav.rel = 'icon'
+          fav.href = matchMedia('(prefers-color-scheme: dark)').matches
+            ? '/favicon-dark.svg'
+            : '/favicon-light.svg'
+          document.head.appendChild(fav)
+        } catch (e) {}
+      })()
+    </script>
+    <!--umami-->
+    <!--Google Analytics-->
+  </head>
+
+  <body>
+    <div id="root" translate="no" class="notranslate"></div>
+  </body>
+</html>
